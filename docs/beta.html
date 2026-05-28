@@ -48,6 +48,11 @@
       line-height: 1.55;
     }
 
+    a {
+      color: var(--primary);
+      overflow-wrap: anywhere;
+    }
+
     main {
       width: min(960px, calc(100% - 32px));
       margin: 0 auto;
@@ -83,7 +88,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 18px;
     }
 
@@ -165,6 +170,7 @@
       color: #ffffff;
       font-weight: 700;
       text-decoration: none;
+      text-align: center;
     }
 
     .button:hover {
@@ -187,6 +193,11 @@
       font-size: 15px;
     }
 
+    .short-copy {
+      margin: 0;
+      color: var(--muted);
+    }
+
     footer {
       margin-top: 24px;
       color: var(--muted);
@@ -195,16 +206,64 @@
 
     @media (max-width: 760px) {
       main {
-        width: min(100% - 24px, 960px);
-        padding: 32px 0;
+        width: 100%;
+        padding: 24px 12px;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
+      .header {
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .intro {
+        font-size: 16px;
+        margin-top: 12px;
       }
 
       .card {
-        padding: 22px;
+        padding: 18px;
+        border-radius: 8px;
+        box-shadow: none;
+      }
+
+      .platform {
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      ol {
+        padding-left: 20px;
+      }
+
+      li + li {
+        margin-top: 12px;
+      }
+
+      .note {
+        margin-top: 16px;
+        padding: 14px;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .button {
+        width: 100%;
+        min-height: 48px;
+      }
+
+      footer {
+        margin-top: 18px;
+        padding: 0 4px;
       }
     }
   </style>
@@ -244,10 +303,13 @@
         </ol>
         <p class="note">
           Google 그룹과 Play 스토어에서 같은 Google 계정을 사용해야 합니다.
+          Instagram 등 앱 안에서 열었다면 외부 브라우저 열기를 자동으로 시도합니다.
+          열리지 않으면 아래 버튼을 눌러 주세요.
         </p>
         <div class="actions">
           <a class="button" href="https://groups.google.com/g/cnu-mate-beta">Google 그룹 가입</a>
           <a class="button secondary" href="https://play.google.com/apps/testing/com.cnu.cnu_mate">Play 테스트 열기</a>
+          <a class="button secondary" href="intent://groups.google.com/g/cnu-mate-beta#Intent;scheme=https;end">외부 브라우저로 그룹 열기</a>
         </div>
       </article>
 
@@ -260,6 +322,9 @@
           </span>
           <h2>iOS</h2>
         </div>
+        <p class="short-copy">
+          iPhone 사용자는 TestFlight 링크를 열어 CNU Mate 베타에 참여해 주세요.
+        </p>
         <div class="actions">
           <a class="button" href="https://testflight.apple.com/join/DTYzGd2g">TestFlight 열기</a>
         </div>
@@ -270,5 +335,20 @@
       CNU Mate는 현재 베타 테스트를 통해서만 설치할 수 있습니다.
     </footer>
   </main>
+  <script>
+    (function () {
+      var ua = navigator.userAgent || '';
+      var isAndroid = /Android/i.test(ua);
+      var isInAppBrowser = /Instagram|FBAN|FBAV|KAKAOTALK|Line\/|NAVER|DaumApps/i.test(ua);
+      var alreadyTried = sessionStorage.getItem('cnuMateAndroidExternalBrowserTried') === '1';
+
+      if (!isAndroid || !isInAppBrowser || alreadyTried) return;
+
+      sessionStorage.setItem('cnuMateAndroidExternalBrowserTried', '1');
+      setTimeout(function () {
+        window.location.href = 'intent://groups.google.com/g/cnu-mate-beta#Intent;scheme=https;end';
+      }, 700);
+    })();
+  </script>
 </body>
 </html>
