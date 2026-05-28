@@ -145,7 +145,7 @@
     }
 
     li + li {
-      margin-top: 10px;
+      margin-top: 18px;
     }
 
     strong {
@@ -193,9 +193,27 @@
       font-size: 15px;
     }
 
+    .step-note {
+      margin-top: 12px;
+    }
+
+    .step-link {
+      display: inline-block;
+      margin-top: 4px;
+      font-weight: 650;
+    }
+
     .short-copy {
       margin: 0;
       color: var(--muted);
+    }
+
+    .guide-image {
+      display: block;
+      width: min(100%, 360px);
+      margin: 14px 0 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
     }
 
     footer {
@@ -215,7 +233,7 @@
       }
 
       h1 {
-        font-size: 34px;
+        font-size: 30px;
       }
 
       .intro {
@@ -235,7 +253,7 @@
       }
 
       h2 {
-        font-size: 24px;
+        font-size: 22px;
       }
 
       ol {
@@ -243,12 +261,22 @@
       }
 
       li + li {
-        margin-top: 12px;
+        margin-top: 18px;
       }
 
       .note {
-        margin-top: 16px;
-        padding: 14px;
+        margin-top: 14px;
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .step-note {
+        margin-top: 10px;
+      }
+
+      .guide-image {
+        width: 100%;
+        margin-top: 12px;
       }
 
       .actions {
@@ -292,25 +320,26 @@
           <li>
             테스터 Google 그룹에 먼저 가입해 주세요.
             <br>
-            <a href="https://groups.google.com/g/cnu-mate-beta">https://groups.google.com/g/cnu-mate-beta</a>
+            <a class="step-link" href="https://groups.google.com/g/cnu-mate-beta">https://groups.google.com/g/cnu-mate-beta</a>
+            <p class="note step-note">
+              Instagram 등 앱 안에서 열면 Google 그룹에서 다시 로그인을 요구할 수 있습니다.
+              가능하면 Chrome 같은 외부 브라우저로 열어 주세요.
+              상단의 "그룹 참여" 버튼을 눌러 주세요.
+              그룹과 Play 스토어에서는 같은 Google 계정을 사용해야 합니다.
+            </p>
+            <img
+              class="guide-image"
+              src="./assets/google-group-join.jpg"
+              alt="Google 그룹 화면에서 그룹 참여 버튼을 누르는 위치"
+            >
           </li>
           <li>
-            그룹 가입 후 Android 테스트 참여 페이지를 열어 주세요.
+            그룹 가입 후 Google Play에서 CNU Mate를 열어 주세요.
             <br>
-            <a href="https://play.google.com/apps/testing/com.cnu.cnu_mate">https://play.google.com/apps/testing/com.cnu.cnu_mate</a>
+            <a class="step-link" href="https://play.google.com/store/apps/details?id=com.cnu.cnu_mate">https://play.google.com/store/apps/details?id=com.cnu.cnu_mate</a>
           </li>
           <li>테스터 참여를 누른 뒤 Google Play에서 <strong>CNU Mate</strong>를 설치해 주세요.</li>
         </ol>
-        <p class="note">
-          Google 그룹과 Play 스토어에서 같은 Google 계정을 사용해야 합니다.
-          Instagram 등 앱 안에서 열었다면 외부 브라우저 열기를 자동으로 시도합니다.
-          열리지 않으면 아래 버튼을 눌러 주세요.
-        </p>
-        <div class="actions">
-          <a class="button" href="https://groups.google.com/g/cnu-mate-beta">Google 그룹 가입</a>
-          <a class="button secondary" href="https://play.google.com/apps/testing/com.cnu.cnu_mate">Play 테스트 열기</a>
-          <a class="button secondary" href="intent://groups.google.com/g/cnu-mate-beta#Intent;scheme=https;end">외부 브라우저로 그룹 열기</a>
-        </div>
       </article>
 
       <article class="card">
@@ -335,20 +364,5 @@
       CNU Mate는 현재 베타 테스트를 통해서만 설치할 수 있습니다.
     </footer>
   </main>
-  <script>
-    (function () {
-      var ua = navigator.userAgent || '';
-      var isAndroid = /Android/i.test(ua);
-      var isInAppBrowser = /Instagram|FBAN|FBAV|KAKAOTALK|Line\/|NAVER|DaumApps/i.test(ua);
-      var alreadyTried = sessionStorage.getItem('cnuMateAndroidExternalBrowserTried') === '1';
-
-      if (!isAndroid || !isInAppBrowser || alreadyTried) return;
-
-      sessionStorage.setItem('cnuMateAndroidExternalBrowserTried', '1');
-      setTimeout(function () {
-        window.location.href = 'intent://groups.google.com/g/cnu-mate-beta#Intent;scheme=https;end';
-      }, 700);
-    })();
-  </script>
 </body>
 </html>
